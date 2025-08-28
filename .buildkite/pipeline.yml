@@ -1,0 +1,12 @@
+steps:
+  - label: "Build NuGet Package"
+    key: "build-nuget-package"
+    command: "dotnet pack -o ./"
+    artifact_paths: "Hello.Buildkite.*.nupkg" # upload to build artifact storage
+
+  - label: "Publish NuGet Package"
+    depends_on: "build-nuget-package"
+    plugins:
+      - publish-to-packages#v2.2.0:
+          artifacts: "Hello.Buildkite.*.nupkg" # publish from build artifact storage
+          registry: "anothertest/packages-nuget-registry"

@@ -1,26 +1,21 @@
 # Hello.Buildkite example NuGet package
 
-This Github repo is configured to use Buildkite to build a NuGet packet and publish it to a NuGet registry on Buildkite Packages.
-The Buildkite setup is in '.buildkite' folder.
+This Github repo is configured to use Buildkite to build a NuGet packet and publish it to a NuGet registry on Buildkite Package Registries.
 
-## '.buildkite/pipline.yml' explanation
+## Quick Start
 
-## Files in this repo and what they do
-
-## Additional setup
-
-* Create base image with Dockerfile
-  * 'dotnet' required to build NuGet package
-  * 'python3' required by Buildkite 'publish to packages' plugin
+* Create NuGet registry in Buildkite Package Registries
+  * Name the registry: 'packages-nuget-example-registry'
+    * Change '.buildkite/pipeline.yml'
+      * The `publish-to-packages` plugin 'registry' should point to you `<YOUR_ORGANIZATION_SLUG>/<YOUR_REGISTRY_SLUG>`
 ```
-FROM docker.io/buildkite/hosted-agent-base:ubuntu-v1.0.1@sha256:f1378abd34fccb2b7b661aaf3b06394509a4f7b5bb8c2f8ad431e7eaa1cabc9c
-
-FROM mcr.microsoft.com/dotnet/sdk:latest
-RUN apt-get update && apt-get install -y python-is-python3
+- publish-to-packages#v2.2.0:
+    ...
+    registry: "anothertest/packages-nuget-example-registry" <==== CHANGE
+    ...
 ```
-
-* Create packages NuGet registry
-  * Add 'OIDC' policy
+* Add 'OIDC' policy to the NuGet registry
+  * https://buildkite.com/docs/package-registries/security/oidc
 ```
 - iss: https://agent.buildkite.com
   scopes:
@@ -31,20 +26,40 @@ RUN apt-get update && apt-get install -y python-is-python3
       equals: anothertest
     pipeline_slug:
       in:
-        - packages-nuget
+        - packages-nuget-example-pipeline
     build_branch:
       matches:
         - main
         - feature/*
 ```
 
-## TODOs
+## Details
 
-Is there are way to create pipeline, base iamges, etc., all through API?
+### Main Files
 
-* References
-  * Buildkite 'publish to packages' plugin
-    * Plugin Page: https://buildkite.com/resources/plugins/buildkite-plugins/publish-to-packages-buildkite-plugin/
-    * Github Repo: https://github.com/buildkite-plugins/publish-to-packages-buildkite-plugin
-  * Add 'OIDC' policy
-    * Reference: https://buildkite.com/docs/package-registries/security/oidc
+Contains the NuGet package project files that we will build.
+
+* README.md
+  * This file
+* Program.cs
+  * The program written in C# that we will build
+* Hello.Buildkite.csproj
+  * dotnet build configuration file
+
+### '.buildkite/' Folder
+
+Contains Buildkite setup/configuration to build the project into a NuGet package and publish to Buildkite Package Registries.
+
+* docker-compose.yml
+  * Since NuGet package build requires 'dotnet' we use 'docker-compose.yml' so we can pull/instantiate a OCI image with 'dotnet' pre-installed
+  * The alternative is a build a base image containing 'dotnet' that Buildkite agent can use, but this involves setup that cannot be captured in this Github repo
+* pipeline.yml
+  * The file defining the steps in the Buildkite pipeline
+
+## References
+
+* Buildkite 'publish to packages' plugin
+  * Plugin Page: https://buildkite.com/resources/plugins/buildkite-plugins/publish-to-packages-buildkite-plugin/
+  * Github Repo: https://github.com/buildkite-plugins/publish-to-packages-buildkite-plugin
+* Add 'OIDC' policy
+  * Reference: https://buildkite.com/docs/package-registries/security/oidc

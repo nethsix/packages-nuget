@@ -1,0 +1,9 @@
+name: "Build & Publish NuGet Package To Buildkite Package Registries"
+description: "An example Buildkite pipeline to build a NuGet package from a Microsoft dotnet project, and publish to a Buildkite Package Regitries."
+emoji: ":nuget:"
+color: "#F0FDF2"
+languages:
+  - "dotnet"
+steps:
+  - label: ":pipeline:"
+    command: "buildkite-agent pipeline upload"

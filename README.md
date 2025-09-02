@@ -2,6 +2,22 @@
 
 This Github repo is configured to use Buildkite to build a NuGet packet and publish it to a NuGet registry on Buildkite Package Registries.
 
+* Buildkite Packages NuGet Example Pipeline
+
+<a href="https://buildkite.com/buildkite/packages-nuget-example/builds/latest?branch=main">
+  <img width="1491" alt="Screenshot of Buildkite Packages NuGet example pipeline" src=".buildkite/screenshot-1.png" />
+</a>
+
+* Buildkite Packages NuGet Example 'Publish NuGet Package' Log
+
+<img width="1491" alt="Screenshot of Buildkite Packages NuGet example 'Publish NuGet Package' log" src=".buildkite/screenshot-2.png" />
+
+* Buildkite Packages Registry With Published NuGet Package'
+
+<img width="1491" alt="Screenshot of Buildkite Packages registry with published NuGet package" src=".buildkite/screenshot-3.png" />
+
+<!-- docs:start -->
+
 ## Quick Start
 
 * Create NuGet registry in Buildkite Package Registries
@@ -63,3 +79,9 @@ Contains Buildkite setup/configuration to build the project into a NuGet package
   * Github Repo: https://github.com/buildkite-plugins/publish-to-packages-buildkite-plugin
 * Add 'OIDC' policy
   * Reference: https://buildkite.com/docs/package-registries/security/oidc
+
+<!-- docs:end -->
+
+## License
+
+See [LICENSE.md](LICENSE.md) (MIT)

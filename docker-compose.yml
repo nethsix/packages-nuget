@@ -2,6 +2,5 @@ services:
   dotnet:
     image: mcr.microsoft.com/dotnet/sdk:latest
     volumes:
-      - ../:/home/nuget/project
+      - ./:/home/nuget/project
     working_dir: /home/nuget/project
-    command: dotnet pack -o ./

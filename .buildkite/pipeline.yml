@@ -6,4 +6,4 @@ steps:
       docker-compose#v3.8.0:
         run: dotnet
         config: .buildkite/docker-compose.yml
-        command: "true"
+        command: "dotnet pack -o ./"

@@ -4,4 +4,3 @@ services:
     volumes:
       - ../:/home/nuget/project
     working_dir: /home/nuget/project
-    command: dotnet pack -o ./

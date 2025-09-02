@@ -2,6 +2,7 @@ steps:
   - label: "Build NuGet Package"
     key: "build-nuget-package"
     artifact_paths: "Hello.Buildkite.*.nupkg" # upload to build artifact storage
+    command: dotnet pack -o ./
     plugins:
       docker-compose#v3.8.0:
         run: dotnet
